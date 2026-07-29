@@ -112,14 +112,14 @@ export function scanRawExpression(source: string): SpdxToken[] {
 
         if (string === '+' && index > 1 && source[index - 2] === ' ') {
             throw new SpdxParseError('Space before `+`');
-        } else if (!string) {
+        } else if (string) {
+            return {
+                type: SpdxTokenType.Operator,
+                string,
+            };
+        } else {
             return undefined;
         }
-
-        return {
-            type: SpdxTokenType.Operator,
-            string,
-        };
     }
 
     function idString(): string | undefined {
